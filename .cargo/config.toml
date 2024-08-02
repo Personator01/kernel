@@ -1,6 +1,5 @@
 [build]
 target = ["os-x86_64"]
-all_targets = false
 
 [unstable]
 build-std = ["core", "compiler_builtins"]

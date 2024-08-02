@@ -1,4 +1,4 @@
-# Initial startup sequence for x86_64
+# x86_64 multiboot2 stub and initial bootstrapping
 # Based on: https://wiki.osdev.org/Bare_Bones#Booting_the_Operating_System
 
 # Multiboot header
@@ -14,9 +14,6 @@
 .long FLAGS
 .long CHECKSUM
 
-.section .data
-aaaa: 
-	.long 4
 
 # Initialize stack to 16KiB
 .section .bss
@@ -27,11 +24,11 @@ stack_top:
 
 # Main entry point
 .section .text
-.extern kern_main
+#.extern kern_main
 .globl _start
 .type _start, @function
 _start:
-	mov $aaaa, %esp
+	mov $stack_top, %esp
 	call kern_main
 	cli
 1:	hlt

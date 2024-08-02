@@ -2,9 +2,17 @@
 #![no_main]
 
 use core::panic::PanicInfo;
+use core::arch::asm;
 
 #[no_mangle]
-pub extern "C" fn kern_main(){
+pub extern "C" fn kern_main() {
+    unsafe{
+        asm! {
+            "nop",
+            "mov %ebx, %esp",
+            options(att_syntax)
+        }
+    }
 }
 
 #[panic_handler]

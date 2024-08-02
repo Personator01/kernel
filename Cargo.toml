@@ -11,8 +11,12 @@ test = false
 doctest = false
 bench = false
 
+
 [profile.dev]
 panic = "abort"
 
 [profile.release]
 panic = "abort"
+
+[build-dependencies]
+cc = "1.1.7"
