@@ -3,3 +3,4 @@ rm -r isodir
 mkdir -p isodir/boot/grub
 cp ../target/os-x86_64/release/kernel isodir/boot/kernel
 cp grub.cfg isodir/boot/grub/grub.cfg
+grub-mkrescue -o os.iso isodir

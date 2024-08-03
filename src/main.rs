@@ -1,18 +1,17 @@
 #![no_std]
 #![no_main]
 
+mod error;
+mod init;
+
+use init::vgatext::put_text;
+
 use core::panic::PanicInfo;
-use core::arch::asm;
 
 #[no_mangle]
 pub extern "C" fn kern_main() {
-    unsafe{
-        asm! {
-            "nop",
-            "mov %ebx, %esp",
-            options(att_syntax)
-        }
-    }
+    let _ = put_text("aaaa");
+    loop{}
 }
 
 #[panic_handler]
