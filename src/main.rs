@@ -1,16 +1,18 @@
 #![no_std]
 #![no_main]
+#![allow(dead_code)]
 
 mod error;
-mod init;
+mod io;
 
-use init::vgatext::put_text;
+use io::vgatext::{put_text, put_text_offset_color, VgaColor};
 
 use core::panic::PanicInfo;
 
 #[no_mangle]
 pub extern "C" fn kern_main() {
-    let _ = put_text("aaaa");
+    let _ = put_text_offset_color("aaa", 4, VgaColor::Magenta, VgaColor::DarkGrey, true);
+    let _ = put_text_offset_color("aaa", 8, VgaColor::Magenta, VgaColor::DarkGrey, false);
     loop{}
 }
 

@@ -1,6 +1,20 @@
 #!/bin/sh
-rm -r isodir
-mkdir -p isodir/boot/grub
-cp ../target/os-x86_64/release/kernel isodir/boot/kernel
-cp grub.cfg isodir/boot/grub/grub.cfg
-grub-mkrescue -o os.iso isodir
+ISO_DIR_NAME=isodir
+LIMINE_INSTALL_LOCATION=/usr/share/limine
+ISO_OUT_NAME=os.iso
+
+cd $(dirname "$0")
+
+(cd ..; ./build)
+
+rm -r ${ISO_DIR_NAME}
+mkdir -p ${ISO_DIR_NAME}/boot/limine
+cp ../target/os-x86_64/release/kernel ${ISO_DIR_NAME}/boot/kernel
+cp limine.conf ${LIMINE_INSTALL_LOCATION}/limine-bios.sys ${LIMINE_INSTALL_LOCATION}/limine-bios-cd.bin ${LIMINE_INSTALL_LOCATION}/limine-uefi-cd.bin ${ISO_DIR_NAME}/boot/limine/
+
+mkdir -p ${ISO_DIR_NAME}/EFI/BOOT/
+cp ${LIMINE_INSTALL_LOCATION}/BOOTX64.EFI ${ISO_DIR_NAME}/EFI/BOOT/
+
+xorriso -as mkisofs -b boot/limine/limine-bios-cd.bin -no-emul-boot -boot-load-size 4 -boot-info-table --efi-boot boot/limine/limine-uefi-cd.bin -efi-boot-part --efi-boot-image --protective-msdos-label ${ISO_DIR_NAME} -o ${ISO_OUT_NAME}
+
+limine bios-install ${ISO_OUT_NAME}
