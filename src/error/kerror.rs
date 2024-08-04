@@ -4,7 +4,8 @@ pub struct KError<'a> {
 }
 
 pub enum KErrorType {
-    InvalidInput
+    InvalidInput,
+    HardwareError
 }
 
 impl<'a> KError<'a> {
